@@ -4,12 +4,12 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "please enter name"],
+      required: [true, "Please enter name"],
       trim: true,
     },
     email: {
       type: String,
-      required: [true, "please enter email"],
+      required: [true, "Please enter email"],
       unique: true,
       trim: true,
     },
@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
       default: "user",
+    },
+    pushToken: {
+      type: String, // ✅ Added push token field
+      default: null,
     },
   },
   { timestamps: true }
