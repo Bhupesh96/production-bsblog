@@ -4,35 +4,29 @@ const dotenv = require("dotenv");
 const colors = require("colors");
 const morgan = require("morgan");
 const connectDB = require("./config/db");
-const { createServer } = require("http");
-const { initializeSocket } = require("./socket"); // Import WebSocket logic
 
-// Load environment variables
+//DOTENV
 dotenv.config();
 
-// Connect to MongoDB
+//MONGODB CONNECTION
 connectDB();
 
-// Create Express App
+//Rest Object
 const app = express();
-const httpServer = createServer(app); // Create an HTTP server
 
-// Middleware
+//middlewares
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-// Routes
+//ROUTES
 app.use("/api/v1/auth", require("./routes/userRoutes"));
 app.use("/api/v1/post", require("./routes/postRoutes"));
 
-// Initialize WebSocket
-initializeSocket(httpServer);
-
-// Port
+//port
 const PORT = process.env.PORT || 8080;
 
-// Start Server
-httpServer.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`.bgGreen.white);
+//LISTEN
+app.listen(PORT, () => {
+  console.log(`Server running ${PORT}`.bgGreen.white);
 });
