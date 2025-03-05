@@ -4,7 +4,7 @@
   "description": "Full Stack Development",
   "main": "server.js",
   "engines": {
-    "node": "20.x"
+    "node": ">=20.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,6 +21,7 @@
     "express-jwt": "^8.5.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.11.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "socket.io": "^4.8.1"
   }
 }

@@ -1,35 +1,35 @@
 const postModel = require("../models/postModel");
+const { notifyNewPost } = require("../socket");
 
+//Create Post
 //Create Post
 const createPostController = async (req, res) => {
   try {
     const { title, description } = req.body;
-    //validate
     if (!title || !description) {
-      return res.status(500).send({
-        success: false,
-        message: "Please provide all fields",
-      });
+      return res
+        .status(400)
+        .send({ success: false, message: "All fields are required" });
     }
+
     const post = await postModel({
       title,
       description,
       postedBy: req.auth._id,
     }).save();
-    res.status(201).send({
-      success: true,
-      message: "post created successfully",
-    });
+
+    notifyNewPost(post); // Notify all connected clients
+
+    res
+      .status(201)
+      .send({ success: true, message: "Post created successfully", post });
   } catch (error) {
     console.log(error);
-    res.status(500).send({
-      success: false,
-      messgage: "Error in create post API",
-      error,
-    });
+    res
+      .status(500)
+      .send({ success: false, message: "Error creating post", error });
   }
 };
-
 //get all post
 const getAllPostController = async (req, res) => {
   try {
